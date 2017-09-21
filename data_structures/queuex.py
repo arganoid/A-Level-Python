@@ -42,7 +42,9 @@ class Queue():
         return value
 
 
-
+# One way you could implement a linear queue if you only had arrays, not lists
+# This linear queue shifts items to the left when popping, so the front item
+# is always at index zero
 class ArrayLinearQueue:
     def __init__(self, capacity):
         self.__array = []
@@ -63,6 +65,7 @@ class ArrayLinearQueue:
             self.__array[i] = self.__array[i+1]
         self.rear -= 1
         return value
+
 
 class ArrayCircularQueue:
     def __init__(self, capacity):
@@ -133,20 +136,34 @@ class ArrayCircularQueue2:
     def is_full(self):
         return self.__rear == (self.__front - 2) % self.__capacity
 
-#myQueue = ArrayCircularQueue2(5)
-#myQueue.push(1)
-#print(myQueue.pop())
-#print(myQueue.pop())
-#print(myQueue.pop())
 
-myQueue = ArrayCircularQueue2(10000)
-p = profiler.Profiler()
-for i in range(0,10000):
-    myQueue.push(i)
-print(p.get_seconds())
+# myQueue = ArrayCircularQueue(5)
+# myQueue.push(10)
+# myQueue.push(20)
+# myQueue.push(30)
+# myQueue.push(40)
+# myQueue.push(50)
+# print(myQueue.pop())
+# print(myQueue.pop())
+# print(myQueue.pop())
+# myQueue.push(60)
 
-p = profiler.Profiler()
-for i in range(0,10000):
-    myQueue.pop()
-print(p.get_seconds())
 
+def profile(queue_class):
+    num_items = 5000
+
+    myQueue = queue_class(num_items)
+    p = profiler.Profiler()
+    for i in range(0, num_items):
+        myQueue.push(i)
+    print(queue_class.__name__ + ": add: " + str(p.get_seconds()))
+
+    p = profiler.Profiler()
+    for i in range(0, num_items):
+        myQueue.pop()
+    print(queue_class.__name__ + ": remove: " + str(p.get_seconds()))
+
+
+if __name__ == "__main__":
+    profile(ArrayLinearQueue)
+    profile(ArrayCircularQueue)
