@@ -146,11 +146,12 @@ column_headings_without_buckets = "{:<5} {:<10}".format("Items", "Seconds")
 format_string = "{:<5} {:<10}  {:.3%}"
 format_string_without_buckets = "{:<5} {:<10}"
 
+max_items = 2 ** 13
+
 print("Profiling bad dictionary (just stored as a list of key-value pairs)")
 print(column_headings_without_buckets)
-max = 2 ** 13
 i = 1
-while i <= max:
+while i <= max_items:
     time = profile_bad_dictionary(i)
     print(format_string_without_buckets.format(i, time))
     i *= 2
@@ -158,18 +159,16 @@ while i <= max:
 
 print("Profiling good dictionary (10,000 buckets, bad hash function)")
 print(column_headings)
-max = 2 ** 13
 i = 1
-while i <= max:
+while i <= max_items:
     time, percent_buckets_used  = profile_good_dictionary(i, GoodDictionary.get_string_hash, 10000)
     print(format_string.format(i, time, percent_buckets_used))
     i *= 2
 
 print("Profiling good dictionary (10,000 buckets, built-in Python hash function)")
 print(column_headings)
-max = 2 ** 13
 i = 1
-while i <= max:
+while i <= max_items:
     time, percent_buckets_used = profile_good_dictionary(i, hash, 10000)  # better hashing function (Python built-in function)
     print(format_string.format(i, time, percent_buckets_used))
     i *= 2
