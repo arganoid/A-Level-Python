@@ -7,30 +7,6 @@ class EmptyError(Exception):
 class FullError(Exception):
     pass
 
-class ArrayPriorityQueueOld:
-    def __init__(self, capacity):
-        self.__array = []
-        for i in range(0,capacity):
-            self.__array.append(0)
-        self.__capacity = capacity
-        self.__rear = -1
-
-    def push(self, value, priority):
-        self.__rear += 1
-        self.__array[self.__rear] = [value, priority]
-
-    def pop(self):
-        value = self.__array[0][0]
-        if self.__rear <= -1:
-            raise IndexError
-        for i in range(0, self.__rear):
-            self.__array[i] = self.__array[i+1]
-        self.__rear -= 1
-        return value
-
-    def get_array(self):
-        return self.__array
-
 class ArrayPriorityQueue1:
     def __init__(self, capacity):
         self.__array = []
@@ -113,15 +89,35 @@ class ArrayPriorityQueue2:
     def get_array(self):
         return self.__array
 
-numbers = {0:"Zero", 1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five", 6:"Six", 7:"Seven", 8:"Eight", 9:"Nine"}
-numberCounts = {0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
-size = 50
-myQueue = ArrayPriorityQueue2(size)
 
-for i in range(0,size):
-    n = random.randint(0,9)
-    numberCounts[n] += 1
-    myQueue.push(numbers[n] + str(numberCounts[n]), n)
-
-for i in range(0,size):
+def RunAQABookExample():
+    myQueue = ArrayPriorityQueue1(100)
+    myQueue.push("Belinda", 1)
+    myQueue.push("Alice", 2)
+    myQueue.push("Carly", 3)
+    myQueue.push("Erica", 4)
     print(myQueue.pop())
+    myQueue.push("Yvonne", 1)
+
+def RunRandomExample():
+    # Test adding random numbers 0-9 in the form of number words, with how many times that word has been used immediately
+    # afterwards, and using the number as priority. e.g. "Zero1", "Zero2", "One1", "Two1", "Two2", "Two3" etc
+
+    numbers = {0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight",
+               9: "Nine"}
+    numberCounts = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
+    size = 50
+    myQueue = ArrayPriorityQueue2(size)
+
+    for i in range(0, size):
+        n = random.randint(0, 9)
+        numberCounts[n] += 1
+        myQueue.push(numbers[n] + str(numberCounts[n]), n)
+
+    for i in range(0, size):
+        print(myQueue.pop())
+
+
+if __name__ == "__main__":
+    #RunAQABookExample()
+    RunRandomExample()
