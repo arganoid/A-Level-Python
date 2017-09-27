@@ -1,6 +1,6 @@
 import functools
 
-# lambda function - shorthand for writing a simple function in one line
+# lambda function - shorthand for defining a simple function in one line
 square = lambda x: x * x
 cube = lambda x: x ** 3
 
