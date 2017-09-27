@@ -12,7 +12,7 @@ def get_distance(x1, y1, x2, y2):
     return math.sqrt(difference_x * difference_x + difference_y * difference_y)
 
 
-my_graph = graph.my_graph
+my_graph = graph.GetTestGraph()
 
 
 # Define some colors

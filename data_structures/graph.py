@@ -32,7 +32,7 @@ class Graph:
 
     def test2(self):
         node = 'X'
-        if node in adjacency_list:
+        if node in self.adjacency_list:
             node_list = self.adjacency_list[node]
             print(node_list)
         else:
@@ -71,24 +71,28 @@ class Graph:
                     to_visit_queue.append(new_value)
             del to_visit_queue[0]
 
+def GetTestGraph():
+    # in this case I'm using a dictionary to store our adjacency list so we can quickly look up the neighbours of any
+    # node based on its name
+    adjacency_list = {}
 
-# in this case I'm using a dictionary to store our adjacency list so we can quickly look up the neighbours of any
-# node based on its name
-adjacency_list = {}
+    # graph from figure 12.2
+    adjacency_list['A'] = ['B']
+    adjacency_list['B'] = ['A', 'C', 'E']
+    adjacency_list['C'] = ['B', 'D']
+    adjacency_list['D'] = ['C', 'E']
+    adjacency_list['E'] = ['B', 'D']
 
-# graph from figure 12.2
-adjacency_list['A'] = ['B']
-adjacency_list['B'] = ['A', 'C', 'E']
-adjacency_list['C'] = ['B', 'D']
-adjacency_list['D'] = ['C', 'E']
-adjacency_list['E'] = ['B', 'D']
+    #circular_adjacency_list = { 'A':['B','E'], 'B':['C'], 'C':['D','Z'], 'D':['E'], 'E':['A', 'D'], 'Z':['C'] }
 
-#circular_adjacency_list = { 'A':['B','E'], 'B':['C'], 'C':['D','Z'], 'D':['E'], 'E':['A', 'D'], 'Z':['C'] }
+    return Graph(adjacency_list)
 
-my_graph = Graph(adjacency_list)
 
-#my_graph.test1()
-#my_graph.test2()
-#my_graph.test3()
-#my_graph.traverse_depth_first('A')
-#my_graph.traverse_breadth_first('A')
+if __name__ == "__main__":
+
+    my_graph = GetTestGraph()
+    my_graph.test1()
+    my_graph.test2()
+    my_graph.test3()
+    my_graph.traverse_depth_first('A')
+    my_graph.traverse_breadth_first('A')
