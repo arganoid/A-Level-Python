@@ -102,7 +102,8 @@ class ArrayCircularQueue:
     def is_full(self):
         return self.__count >= self.__capacity
 
-# Alternative way of checking empty/full
+# Alternative way of checking empty/full - don't keep a count, instead base it on the position of
+# front/rear pointers in relation to each other
 class ArrayCircularQueue2:
     def __init__(self, capacity):
         capacity += 1   # there will be one empty slot even in full queue
@@ -150,8 +151,8 @@ class ArrayCircularQueue2:
 
 
 def profile(queue_class):
-    num_items = 5000
 
+    num_items = 5000
     myQueue = queue_class(num_items)
     p = profiler.Profiler()
     for i in range(0, num_items):
@@ -164,6 +165,28 @@ def profile(queue_class):
     print(queue_class.__name__ + ": remove: " + str(p.get_seconds()))
 
 
+
+def profile_for_graph(queue_class):
+    # Run this then copy the output into Excel and create a line graph for each class that was profiled
+
+    print("Profiling class: " + queue_class.__name__)
+
+    for num_items in range(100,10000,100):
+        p = profiler.Profiler()
+
+        myQueue = queue_class(num_items)
+
+        for i in range(0, num_items):
+            myQueue.push(i)
+
+        for i in range(0, num_items):
+            myQueue.pop()
+
+        print(p.get_seconds())
+
 if __name__ == "__main__":
-    profile(ArrayLinearQueue)
-    profile(ArrayCircularQueue)
+    func = profile
+    #func = profile_for_graph
+
+    func(ArrayLinearQueue)
+    func(ArrayCircularQueue)
