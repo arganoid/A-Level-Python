@@ -23,8 +23,8 @@ def run_unit_tests():
 
 
     # median
-    list3 = [10,20,30]
-    list4 = [20, 30]
+    list3 = [10,20,100]
+    list4 = [20, 300]
 
     test(average_solutions.median, list3, 20)
     test(average_solutions.median, list4, 25)
