@@ -11,6 +11,9 @@ def generate_one_time_pad(length):
     return one_time_pad
 
 def perform_vernam_encyrption(inputString, pad, reverse=False):
+    # Output is a list of numbers rather than a string. This is because we are using the Unicode character set
+    # rather than the Baudot code used in the textbook. In Baudot code almost every 5-bit code corresponds to
+    # a letter, but in Unicode this is not the case - 0-31 are control characters with no visual representation
     outputList = []
 
     i = 0
@@ -44,14 +47,15 @@ def perform_vernam_decryption(inputList, pad):
 
 ####
 
-originalString = 'This is a message to be passed through a Vernam (one time pad) cipher'
+plainText = 'This is a message to be passed through a Vernam (one time pad) cipher'
 
-pad = generate_one_time_pad(len(originalString))
+pad = generate_one_time_pad(len(plainText))
 
-originalString = originalString.upper()
-print('Original string: ' + originalString)
+plainText = plainText.upper()
+print('Original string: ' + plainText)
 
-encrypted = perform_vernam_encyrption(originalString, pad)
+encrypted = perform_vernam_encyrption(plainText, pad)
+
 encrypted_oneline = ''
 for n in encrypted:
     encrypted_oneline += str(n) + ' '
