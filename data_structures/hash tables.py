@@ -82,7 +82,7 @@ class GoodDictionary:
         bucket.append(key_and_value(key, value))
 
     def get(self, key):
-        index = self.get_string_hash(key)
+        index = self.hash_function(key) % self.num_buckets
         bucket = self.hashtable_list[index]
 
         for i in range(0, len(bucket)):
@@ -147,6 +147,7 @@ format_string = "{:<5} {:<10}  {:.3%}"
 format_string_without_buckets = "{:<5} {:<10}"
 
 max_items = 2 ** 13
+
 
 print("Profiling bad dictionary (just stored as a list of key-value pairs)")
 print(column_headings_without_buckets)
