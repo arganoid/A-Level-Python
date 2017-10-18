@@ -27,7 +27,7 @@ def run_unit_tests():
     list4 = [20, 300]
 
     test(average_solutions.median, list3, 20)
-    test(average_solutions.median, list4, 25)
+    test(average_solutions.median, list4, 160)
 
 
     # mode
