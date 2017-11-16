@@ -93,7 +93,7 @@ class GoodDictionary:
 
     @staticmethod
     def test_good_dictionary():
-        test_dictionary = GoodDictionary()
+        test_dictionary = GoodDictionary( GoodDictionary.get_string_hash )
         test_dictionary.set('Susan Smith', 12345)
         test_dictionary.set('John Jones', 98765)
         test_dictionary.set('Harry Hill', 6574583)
