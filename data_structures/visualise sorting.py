@@ -65,7 +65,7 @@ def pygame_display_list(list, current_index, positions_override = None):
         if event.type == pygame.QUIT: # If user clicked close
             sys.exit()
 
-    time.sleep(1)
+    time.sleep(0.5)
 
 def lerp( pos0, pos1, t ):
     x = (pos1[0] - pos0[0]) * t + pos0[0]
@@ -86,7 +86,6 @@ def swap_animation(list, swap1, swap2):
         delta_time = clock.tick(60) / 1000
 
         swap_progress += delta_time * 1
-
 
         screen.fill(WHITE)
 
@@ -116,17 +115,17 @@ def swap_animation(list, swap1, swap2):
                 sys.exit()
 
 
-def test():
+if __name__ == "__main__":
     if True:
         my_list = [5,1,2,9,8,6,4,3,5,0,7,3,1,4]
     else:
         my_list = []
         for i in range(0,100):
             my_list.append(random.randint(0,9))
+
     #sorting.bubble_sort(my_list, pygame_display_list, swap_animation)
-    #sorting.insertion_sort(my_list, pygame_display_list, swap_animation)
-    sorting.merge_sort(my_list,0,len(my_list)-1, pygame_display_list)
+    sorting.insertion_sort(my_list, pygame_display_list, swap_animation)
+    #sorting.merge_sort(my_list,0,len(my_list)-1, pygame_display_list)
     #sorting.quick_sort(my_list, 0, len(my_list) - 1, pygame_display_list, swap_animation)
     time.sleep(3)
 
-test()
