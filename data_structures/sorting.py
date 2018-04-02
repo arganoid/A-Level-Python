@@ -19,9 +19,9 @@ def bubble_sort(list, print_func, swap_animation = None):
 def bubble_sort_optimised(list, print_func, swap_animation = None):
     print_func(list, 0)
     steps = 0
-    completed = True
-    while not completed:
-        completed = True
+    anySwapsMade = True
+    while anySwapsMade:
+        anySwapsMade = False
         for i in range(0, len(list)-1):
             steps = steps + 1
             if list[i] > list[i+1]:
@@ -30,7 +30,7 @@ def bubble_sort_optimised(list, print_func, swap_animation = None):
                 temp = list[i+1]
                 list[i+1] = list[i]
                 list[i] = temp
-                completed = False
+                anySwapsMade = True
             print_func(list, i)
 
     print("Sorted in " + str(steps) + " steps")
@@ -72,13 +72,13 @@ def merge_sort(data_list, start, end, print_func):
         merge(data_list, start, middle, end, print_func)
         print_func(data_list, middle)
 
-# Insertion sort is faster than bubble sort and uses less memory than merge sort
-# not required for AQA A-Level
+# Insertion sort is faster than bubble sort (although still very
+# poor for large arrays) and uses less memory than merge sort.
+# Not required for AQA A-Level.
 def insertion_sort(list, print_func, swap_animation = None):
     print_func(list, 0)
     for i1 in range(1,len(list)):
         i2 = i1
-        print_func(list, i2)
         while i2 > 0 and list[i2-1] > list[i2]:
             print_func(list, i2)
             if swap_animation != None:
@@ -86,7 +86,6 @@ def insertion_sort(list, print_func, swap_animation = None):
             temp = list[i2 - 1]
             list[i2 - 1] = list[i2]
             list[i2] = temp
-            print_func(list, i2)
             i2 -= 1
 
 def quick_sort(list, start, end, print_func, swap_animation = None):
@@ -119,13 +118,12 @@ def quick_sort_partition(list, start, end, swap_animation = None):
         list[i] = list[j]
         list[j] = temp
 
-def test():
-    my_list = [5,1,2,9,8,1,4,3,5,0,7,3,1]
-    #my_list = [5,1,2,9]
+if __name__ == "__main__":
+    #my_list = [5,1,2,9,8,1,4,3,5,0,7,3,1]
+    my_list = [5,1,2,9]
 
     #bubble_sort(my_list, print)
     #merge_sort(my_list,0,len(my_list)-1, print)
-    #insertion_sort(my_list, print)
+    insertion_sort(my_list, print)
     #quick_sort(my_list,0,len(my_list)-1, print)
 
-#test()
