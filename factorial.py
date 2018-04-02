@@ -9,8 +9,7 @@ def factorialIterative(x):
     result = 1
     for i in range(2, x+1):     # range not inclusive
         result *= i
-        if i % 10000 == 0:
-            print(i)
     return result
 
 print(factorialIterative(50000))
+#print(factorialRecursive(3))
