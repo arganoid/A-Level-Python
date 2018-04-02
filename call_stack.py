@@ -4,18 +4,21 @@
 def func1(x):
     x *= 10
     print("Func1: " + str(x))
-    func2(x)
+    x = func2(x)
     print("Func1: " + str(x))
+    return x
 
 def func2(y):
     y *= 3
     print("Func2: " + str(y))
-    func3(y)
+    y += func3(y)
     print("Func2: " + str(y))
+    return y
 
 def func3(z):
     z += 8
     print("Func3: " + str(z))
+    return z
 
 
-func1(1)
+print(func1(1))
