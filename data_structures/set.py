@@ -46,4 +46,3 @@ print(mySet5)
 
 print(2 in mySet)   # how to tell if something is in a set
 print (2 in mySet5)
-
