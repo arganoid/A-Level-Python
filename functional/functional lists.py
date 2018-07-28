@@ -14,15 +14,9 @@ def length(l):
 
 
 mylist = [2,5,3,6,4,8,9]
-#
-# print(head(mylist))
-# print(tail(mylist))
-#
-# doubledList = list( map( lambda x: x*2, mylist ) )
-# print(doubledList)
-#
-# total = functools.reduce( lambda x,y: x + y, mylist, 0 )
-# print(total)
+
+print(head(mylist))
+print(tail(mylist))
 
 
 
