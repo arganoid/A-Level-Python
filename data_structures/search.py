@@ -1,42 +1,55 @@
 import data_structures.profiler as profiler
 import random
 
-my_list = []
-for i in range(0, 10000000):
-    my_list.append(random.randint(-2000000000, 200000000))
-
-my_list.sort()
-
 # Returns index of item, if not present returns -1
-def linear_search(list, item):
+def linear_search(list, item_searched_for):
     for i in range(0,len(list)):
-        if list[i] == item:
+        if list[i] == item_searched_for:
             return i
 
     # Not found
     return -1
 
-# Returns index of item, if not present returns -1. List must be sorted.
-def binary_search(list, item):
+# List must be sorted. Returns index of item, if not present returns -1. Second return value is number of steps taken.
+def binary_search(list, item_searched_for):
     steps = 0
     start = 0
     end = len(list) - 1
-    i = (end + start) // 2
-    while list[i] != item and end > start:  # AQA book is wrong! it effectively says end != start - that won't work for lists with odd number of items (TODO CONFIRM)
-        i = (end + start) // 2
-        if list[i] < item:
-            start = i + 1
-        elif list[i] > item:
-            end = i - 1
+    mid = (end + start) // 2
+    while list[mid] != item_searched_for and end > start:  # AQA book is wrong! It effectively says end != start - that won't work for lists with odd number of items (TODO CONFIRM)
+        mid = (end + start) // 2
+        if list[mid] < item_searched_for:
+            # Item can't be in the first half of the part of the list we're looking at
+            start = mid + 1
+        elif list[mid] > item_searched_for:
+            # Item can't be in the second half of the part of the list we're looking at
+            end = mid - 1
         steps += 1
 
-    print(steps)
-
-    if list[i] == item:
-        return i
+    if list[mid] == item_searched_for:
+        return mid, steps
     else:
-        return -1
+        return -1, steps
 
-p = profiler.Profiler()
-print(binary_search(my_list,1))
-print(p.get_seconds())
+if __name__ == '__main__':
+    my_list = []
+
+    p = profiler.Profiler()
+    for i in range(0, 10000000):
+        my_list.append(random.randint(-4e9, 4e9))       # 4e9 = 4 * 10^9 i.e. 4 billion
+    print("List add time: " + str(p.get_seconds()))
+
+    p = profiler.Profiler()
+    my_list.sort()
+    print("Sort time: " + str(p.get_seconds()))
+
+    p = profiler.Profiler()
+    result = linear_search(my_list, 1)
+    print("Linear search time: " + str(p.get_seconds()))
+    print("Linear search result: " + str(result))
+
+    p = profiler.Profiler()
+    result, steps = binary_search(my_list,1)
+    print("Binary search time: " + str(p.get_seconds()))
+    print("Binary search result: " + str(result))
+    print("Binary search steps: " + str(steps))
