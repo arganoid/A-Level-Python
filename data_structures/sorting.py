@@ -2,16 +2,16 @@
 def bubble_sort(list, print_func, swap_animation = None):
     print_func(list, 0)
     steps = 0
-    for i1 in range(0,len(list)-1):
-        for i2 in range(0, len(list)-1):
+    for i in range(0,len(list)-1):
+        for j in range(0, len(list)-1):
             steps = steps + 1
-            if list[i2] > list[i2+1]:
+            if list[j] > list[j+1]:
                 if swap_animation != None:
-                    swap_animation(list, i2, i2+1)
-                temp = list[i2+1]
-                list[i2+1] = list[i2]
-                list[i2] = temp
-            print_func(list, i2)
+                    swap_animation(list, j, j+1)
+                temp = list[j+1]
+                list[j+1] = list[j]
+                list[j] = temp
+            print_func(list, j)
 
     print("Sorted in " + str(steps) + " steps")
 
@@ -66,7 +66,7 @@ def merge_sort(data_list, start, end, print_func):
                 i_data_list += 1
 
     if end > start:
-        middle = int((start + end) / 2)
+        middle = (start + end) // 2
         merge_sort(data_list, start, middle, print_func)
         merge_sort(data_list, middle+1, end, print_func)
         merge(data_list, start, middle, end, print_func)
@@ -77,24 +77,44 @@ def merge_sort(data_list, start, end, print_func):
 # Not required for AQA A-Level.
 def insertion_sort(list, print_func, swap_animation = None):
     print_func(list, 0)
-    for i1 in range(1,len(list)):
-        i2 = i1
-        while i2 > 0 and list[i2-1] > list[i2]:
-            print_func(list, i2)
+    for i in range(1,len(list)):
+        j = i
+        print_func(list, j)
+        while j > 0 and list[j-1] > list[j]:
+            # Shift current item down until it reaches its correct position
+            print_func(list, j)
             if swap_animation != None:
-                swap_animation(list, i2, i2 - 1)
-            temp = list[i2 - 1]
-            list[i2 - 1] = list[i2]
-            list[i2] = temp
-            i2 -= 1
+                swap_animation(list, j, j - 1)
 
+            # Swap elements - Python allows this kind of double assignment which removes the need for a temporary variable
+            list[j-1], list[j] = list[j], list[j-1]
+
+            print_func(list, j)
+            j -= 1
+
+# This version is slightly faster as it reduces the number of assignments.
+# No swap_animation parameter as won't work with visualisation as it currently stands
+def insertion_sort_optimised(list, print_func):
+    print_func(list, 0)
+    for i in range(1,len(list)):
+        j = i
+        if list[j-1] > list[j]:
+            current = list[j]
+            while j > 0 and list[j-1] > current:
+                # Shift current item down until it reaches its correct position
+                print_func(list, i)
+                list[j] = list[j - 1]
+                j -= 1
+            list[j] = current
+
+
+# Not required for AQA A-level
 def quick_sort(list, start, end, print_func, swap_animation = None):
     if start < end:
         p = quick_sort_partition(list, start, end, swap_animation)
         print_func(list, p)
         quick_sort(list, start, p, print_func)
         quick_sort(list, p + 1, end, print_func)
-
 
 def quick_sort_partition(list, start, end, swap_animation = None):
     pivot = list[start]
@@ -125,5 +145,6 @@ if __name__ == "__main__":
     #bubble_sort(my_list, print)
     #merge_sort(my_list,0,len(my_list)-1, print)
     insertion_sort(my_list, print)
+    #insertion_sort_optimised(my_list, print)
     #quick_sort(my_list,0,len(my_list)-1, print)
 
