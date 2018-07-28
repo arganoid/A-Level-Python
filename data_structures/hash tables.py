@@ -1,4 +1,4 @@
-import data_structures.profiler as profiler
+import profiler
 
 # Imagine that Python did not include a dictionary data structure (e.g. phoneNumbers['John Smith'] = 0123456789)
 # How would we create one?

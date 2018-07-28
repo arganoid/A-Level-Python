@@ -1,4 +1,4 @@
-import data_structures.profiler as profiler
+import profiler
 
 # File named queuex to avoid clashing with built-in Python queue module
 

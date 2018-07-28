@@ -3,7 +3,7 @@ import sys
 import time
 
 import pygame
-import data_structures.sorting as sorting
+import algorithms.sorting as sorting
 
 pygame.init()
 

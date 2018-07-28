@@ -1,4 +1,4 @@
-import data_structures.profiler as profiler
+import profiler
 import random
 
 # Returns index of item, if not present returns -1
