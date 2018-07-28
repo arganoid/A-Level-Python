@@ -18,7 +18,7 @@ print(x)
 # the original data.
 
 def test_reference_type(parameter):
-    parameter.push(10)    # make an addition to the supplied list
+    parameter.append(10)    # make an addition to the supplied list
 
 my_list = [5]
 print(my_list)
@@ -31,7 +31,7 @@ print(my_list)
 # affecting the original reference. (This varies depending on which language is used)
 
 def test_reference_type_2(parameter):
-    parameter = [1,2,3] # create new list, the old one is left intacy
+    parameter = [1,2,3] # create new list, the old one is left intact
 
 my_list_2 = [5]
 print(my_list_2)
