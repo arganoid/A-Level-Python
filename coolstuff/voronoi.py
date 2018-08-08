@@ -70,13 +70,14 @@ while True:
                 pygame.display.flip()
                 line_profiler = profiler.Profiler()
 
-    print("Frame: " + frame_profiler.get_seconds())
+    print("Frame: " + str(frame_profiler.get_seconds()))
     pygame.display.flip()
     frame_profiler = profiler.Profiler()
 
 #    pygame.image.save(screen, f"img{image_idx:04}.png" )
 #    image_idx += 1
 
+    # Apply velocity to points
     for point in points:
         point[0][0] += point[2][0]
         point[0][1] += point[2][1]
