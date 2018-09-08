@@ -32,11 +32,10 @@ GREEN    = (   0, 255,   0)
 RED      = ( 255,   0,   0)
 BLUE     = (   0,   0, 255)
 
+pygame.init()
+
 screen_size = (1200,700)
 screen = pygame.display.set_mode(screen_size)
-
-
-pygame.init()
 
 font = pygame.font.Font(None, 30)
 
