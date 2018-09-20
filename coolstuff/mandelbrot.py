@@ -25,7 +25,6 @@ def f(z, c, iterations=0):
         else:
             return f(result, c, iterations+1)
 
-
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 GREEN    = (   0, 255,   0)
@@ -34,10 +33,9 @@ BLUE     = (   0,   0, 255)
 
 pygame.init()
 
-screen_size = (1200,700)
+screen_size = (1280,720)
 screen = pygame.display.set_mode(screen_size)
 
-font = pygame.font.Font(None, 30)
 
 screen.fill(WHITE)
 scale = 0.3
