@@ -8,6 +8,9 @@ def bubble_sort(list, print_func, swap_animation = None):
             if list[j] > list[j+1]:
                 if swap_animation != None:
                     swap_animation(list, j, j+1)
+
+                # Swap items using a temporary variable
+                # See bubble_sort_optimised below for an alternative way of doing this in Python
                 temp = list[j+1]
                 list[j+1] = list[j]
                 list[j] = temp
@@ -27,9 +30,11 @@ def bubble_sort_optimised(list, print_func, swap_animation = None):
             if list[i] > list[i+1]:
                 if swap_animation != None:
                     swap_animation(list, i, i+1)
-                temp = list[i+1]
-                list[i+1] = list[i]
-                list[i] = temp
+
+                # Swap elements - Python allows this kind of double assignment which removes the need for a temporary variable
+                # Don't do this in pseudocode!
+                list[i + 1], list[i] = list[i], list[i + 1]
+
                 anySwapsMade = True
             print_func(list, i)
 
