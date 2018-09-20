@@ -11,6 +11,10 @@ import profiler
 import pygame
 import pygame.gfxdraw
 
+NUM_POINTS = 100
+
+SAVE_IMAGES = False
+
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
 GREEN    = (   0, 255,   0)
@@ -24,10 +28,10 @@ screen = pygame.display.set_mode(screen_size)
 
 screen.fill(WHITE)
 
-num_points = 100
+
 
 points = []
-for i in range(0,num_points):
+for i in range(0, NUM_POINTS):
     pos = [ random.randint(0,screen_size[0]), random.randint(0,screen_size[1]) ]
     col = ( random.randint(0,255), random.randint(0,255), random.randint(0,255) )
     vel = ( random.randrange(-1,1), random.randrange(-1,1) )
@@ -41,6 +45,7 @@ frame_profiler = profiler.Profiler()
 while True:
     for py in range(0, screen_size[1]):
         for px in range(0, screen_size[0]):
+
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
                     sys.exit()
@@ -74,8 +79,9 @@ while True:
     pygame.display.flip()
     frame_profiler = profiler.Profiler()
 
-#    pygame.image.save(screen, f"img{image_idx:04}.png" )
-#    image_idx += 1
+    if SAVE_IMAGES:
+        pygame.image.save(screen, f"img{image_idx:04}.png" )
+        image_idx += 1
 
     # Apply velocity to points
     for point in points:
