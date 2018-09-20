@@ -1,3 +1,5 @@
+# Dog, Cat and Elephant classes - not using inheritance
+
 class Dog():
     def __init__(self, name, age, breed):
         self.__name = name          # __ = private
@@ -18,26 +20,26 @@ class Dog():
 
 class Cat():
     def __init__(self, name, age):
-        self.age = age
-        self.name = name
+        self.__age = age
+        self.__name = name
 
     def make_noise(self):
         print("meow")
 
     def print_age(self):
-        print(self.age)
+        print(self.__age)
 
 class Elephant():
     def __init__(self, name, age, trunk_length):
-        self.age = age
-        self.name = name
+        self.__age = age
+        self.__name = name
         self.trunk_length = trunk_length
 
     def make_noise(self):
         print("elephant noise")
 
     def print_age(self):
-        print(self.age)
+        print(self.__age)
 
 
 # Instantiate (i.e. create) a dog object, store a reference to it in my_dog

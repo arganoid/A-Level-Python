@@ -22,7 +22,6 @@ class Dog(Animal):
     def make_noise(self):
         print("woof")
 
-
 class Cat(Animal):
     def __init__(self, name, age):
         super().__init__(name, age)
@@ -30,9 +29,18 @@ class Cat(Animal):
     def make_noise(self):
         print("meow")
 
+class Elephant(Animal):
+    def __init__(self, name, age, trunk_length):
+        super().__init__(name, age)
+        self.__trunk_length = trunk_length
+
+    def make_noise(self):
+        print("elephant noise")
+
 
 my_dog = Dog("Fido", 3, "Terrier")     # Instantiate (ie create) a dog object, store a reference to it in my_dog
 my_cat = Cat("Felix", 5)
+
 
 my_dog.make_noise()
 my_dog.print_age()
