@@ -3,6 +3,13 @@
 # It is far from complete as it doesn't deal with collisions
 # Requires Python 3.6
 
+# I don't think this approach is widely used these days. It would have been used more in the 70s and 80s when it was
+# not possible to load large files entirely into RAM.
+
+# Python has a module called shelve which achieves similar results, i.e. reading/writing data based on a key,
+# just like working with a dictionary. However, shelve has the same serious security issues as the 'pickle' - see
+# 'CIE sequential file.py' for info about that
+
 import struct
 import hashlib
 
@@ -86,6 +93,8 @@ def verify_file(data):
 
     # file is closed automatically as we opened it using 'with'
     return data
+
+###################
 
 cars = [ CarRecord("HU17 IOP", 1400), CarRecord("NH52 EQM", 2000), CarRecord("IK08 DAK", 1000) ]
 
