@@ -43,9 +43,10 @@ def bubble_sort_optimised(list, print_func, swap_animation = None):
 # Merge sort is much faster than bubble sort (except maybe for very short lists) but uses more memory
 def merge_sort(data_list, start, end, print_func):
 
-    # we define a function within a function, the merge function can only be called within merge_sort
-    # this can only be done in some languages. don't do it in pseudocode.
-    def merge(data_list, start, middle, end, print_func):
+    # We define a function within a function, the merge function can only be called within merge_sort, and
+    # it can access variables from the outer function - this makes it what's known as a 'closure'.
+    # This can only be done in some languages. Don't do it in pseudocode.
+    def merge(start, middle, end, print_func):
         temp_list = list(data_list) # not efficient, we copy the entire list every time this function runs!
         i_data_list = start
         i_left = start
@@ -74,7 +75,7 @@ def merge_sort(data_list, start, end, print_func):
         middle = (start + end) // 2
         merge_sort(data_list, start, middle, print_func)
         merge_sort(data_list, middle+1, end, print_func)
-        merge(data_list, start, middle, end, print_func)
+        merge(start, middle, end, print_func)
         print_func(data_list, middle)
 
 # Insertion sort is faster than bubble sort (although still very
