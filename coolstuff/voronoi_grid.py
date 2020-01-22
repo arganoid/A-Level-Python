@@ -122,10 +122,10 @@ while True:
             else:
                 pygame.gfxdraw.pixel(screen, px, py, BLACK)
 
-            if px == 0:
-                #print("Line: " + str(line_profiler.get_seconds()))
-                pygame.display.flip()
-                #line_profiler = profiler.Profiler()
+            # if px == 0:
+            #     #print("Line: " + str(line_profiler.get_seconds()))
+            #     pygame.display.flip()
+            #     #line_profiler = profiler.Profiler()
 
     print("Frame: " + str(frame_profiler.get_seconds()))
     pygame.display.flip()

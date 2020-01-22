@@ -28,8 +28,6 @@ screen = pygame.display.set_mode(screen_size)
 
 screen.fill(WHITE)
 
-
-
 points = []
 for i in range(0, NUM_POINTS):
     pos = [ random.randint(0,screen_size[0]), random.randint(0,screen_size[1]) ]
@@ -70,10 +68,10 @@ while True:
 
             pygame.gfxdraw.pixel(screen, px, py, nearest_point[1])
 
-            if px == 0:
-                print("Line: " + str(line_profiler.get_seconds()))
-                pygame.display.flip()
-                line_profiler = profiler.Profiler()
+            # if px == 0:
+            #     print("Line: " + str(line_profiler.get_seconds()))
+            #     pygame.display.flip()
+            #     line_profiler = profiler.Profiler()
 
     print("Frame: " + str(frame_profiler.get_seconds()))
     pygame.display.flip()
