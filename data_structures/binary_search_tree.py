@@ -58,12 +58,24 @@ class Node:
         if self.right != None:
             self.right.traverse_in_order_advanced(visit_func, path+"R")
 
+    def find(self, value, found_func, path):
+        if self.value == value:
+            found_func(path)
+        elif self.left != None:
+            self.left.find(value, found_func, path + "L")
+        elif self.right != None:
+            self.right.find(value, found_func, path + "R")
+
 class BinarySearchTree:
-    def __init__(self, value):
-        self.root_node = Node(value)
+    def __init__(self, value=None):
+        if value is not None:
+            self.insert(value)
 
     def insert(self, value):
-        self.root_node.insert(value)
+        if not hasattr(self, 'root_node'):
+            self.root_node = Node(value)
+        else:
+            self.root_node.insert(value)
 
     def traverse_pre_order(self):
         self.root_node.traverse_pre_order()
@@ -76,6 +88,10 @@ class BinarySearchTree:
 
     def traverse_in_order_advanced(self, visit_func):
         self.root_node.traverse_in_order_advanced(visit_func, "")
+
+    def find(self, value, found_func):
+        self.root_node.find(value, found_func, '')
+
 
 def generate_test_tree():
     tree = BinarySearchTree(50)
