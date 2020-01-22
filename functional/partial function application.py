@@ -5,7 +5,8 @@ from functools import partial
 def power(base, exponent):
     return base ** exponent
 
-# Now what if we want to have dedicated square and cube functions that leverage the power() function? Of course, we can do it thus:
+# Now what if we want to have dedicated square and cube functions that
+# leverage the power() function? Of course, we can do it thus:
 
 # def square(base):
 #     return power(base, 2)
@@ -23,12 +24,21 @@ def power(base, exponent):
 # Let's rewrite our square and cube functions using partials
 
 square = partial(power, exponent=2)
-cube = partial(power, exponent=3)
+#cube = partial(power, exponent=3)
 
 print(square(2))
-print(cube(2))
+#print(cube(2))
 
 
 power_functions = []
 for i in range(0,100):
     power_functions.append( partial(power, exponent=i) )
+
+print(power_functions[99](3))
+
+
+def get_power_function(exponent):
+    return lambda x: x ** exponent
+
+cube = get_power_function(3)
+print(cube(7))
