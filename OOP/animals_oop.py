@@ -43,6 +43,7 @@ class Elephant():
 
 
 # Instantiate (i.e. create) a dog object, store a reference to it in my_dog
+# Objects are also sometimes called instances
 my_dog = Dog("Fido", 3, "Terrier")
 
 print(my_dog.name)
