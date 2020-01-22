@@ -26,7 +26,7 @@ screen_size = (1250,650)
 screen = pygame.display.set_mode(screen_size)
 
 node_positions = {}
-for node in my_graph.adjacency_list:
+for node in my_graph.node_adjacency_lists:
     node_positions[node] = [random.randint(20,screen_size[0]-20), random.randint(20,screen_size[1]-20)]
 
 pygame.init()
@@ -47,7 +47,7 @@ while True:
             nearest_distance = 1e9
             nearest_node = None
             mouse_pos = pygame.mouse.get_pos()
-            for node in my_graph.adjacency_list:
+            for node in my_graph.node_adjacency_lists:
                 node_pos = node_positions[node]
                 distance = get_distance(node_pos[0], node_pos[1], mouse_pos[0], mouse_pos[1])
                 if distance < nearest_distance:
@@ -62,9 +62,9 @@ while True:
 
 
 
-    for node in my_graph.adjacency_list:
+    for node in my_graph.node_adjacency_lists:
 
-        node_adjacency_list = my_graph.adjacency_list[node]
+        node_adjacency_list = my_graph.node_adjacency_lists[node]
         for adjacent_node in node_adjacency_list:
             pygame.draw.line(screen, BLACK, node_positions[node], node_positions[adjacent_node], 1)
 
