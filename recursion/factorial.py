@@ -12,8 +12,7 @@ def factorialIterative(x):
 # 4 * 3!
 # 3 * 2!
 # 2 * 1!
-# 1 * 0!
-# 0! = 1
+# 1! = 1
 
 # The following function qualifies as both recursive and functional
 def factorialRecursive(x):
@@ -21,7 +20,6 @@ def factorialRecursive(x):
         return x
     else:
        return x * factorialRecursive(x-1)
-
 
 print(factorialIterative(5))
 print(factorialRecursive(5))
