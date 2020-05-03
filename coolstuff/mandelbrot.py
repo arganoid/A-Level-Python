@@ -15,7 +15,11 @@ import pygame.gfxdraw
 max_iterations = 60
 threshold = 1000
 
-def f(z, c, iterations=0):
+# The 'f' recursive function is used to decide the colour of each pixel in the Mandelbrot set
+# Here I also illustrate Python's 'type hinting' system. For each variable/parameter you can specify the type that
+# variable is intended to be. The same can be done for function return types. Python does not enforce these type hints,
+# but IDEs such as Pycharm use them to indicate possible errors to the programmer.
+def f(z: complex, c: complex, iterations:int = 0) -> int:
     result = z*z + c
     if abs(result) > threshold:
         return iterations
