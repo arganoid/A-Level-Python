@@ -1,3 +1,5 @@
+import random
+
 # Bubble sort is simple but very slow compared to other sorting algorithms
 def bubble_sort(l, print_func, swap_animation = None):
     print_func(l, 0)
@@ -31,8 +33,8 @@ def bubble_sort_optimised(l, print_func, swap_animation = None):
                 if swap_animation != None:
                     swap_animation(l, i, i + 1)
 
-                # Swap elements - Python allows this kind of double assignment which removes the need for a temporary variable
-                # Don't do this in pseudocode!
+                # Swap elements - unlike most languages Python allows this kind of double assignment which removes
+                # the need for a temporary variable.
                 l[i + 1], l[i] = l[i], l[i + 1]
 
                 anySwapsMade = True
@@ -41,42 +43,45 @@ def bubble_sort_optimised(l, print_func, swap_animation = None):
     print("Sorted in " + str(steps) + " steps")
 
 # Merge sort is much faster than bubble sort (except maybe for very short lists) but uses more memory
-def merge_sort(data_list, start, end, print_func):
+# Unlike the other algorithms in this file, this implementation of merge sort does not sort the list
+# 'in-place' - i.e. the original list is not changed, instead it returns a new list
+def merge_sort(l, start, end, print_func):
 
-    # We define a function within a function, the merge function can only be called within merge_sort, and
-    # it can access variables from the outer function - this makes it what's known as a 'closure'.
-    # This can only be done in some languages. Don't do it in pseudocode.
-    def merge(start, middle, end, print_func):
-        temp_list = list(data_list) # not efficient, we copy the entire list every time this function runs!
-        i_data_list = start
-        i_left = start
-        i_right = middle + 1
+    # Here we define a function within a function. The merge function can only be called within merge_sort, and
+    # it can access variables from the outer function - this makes it what's known as a 'closure' - although we
+    # don't make use of outer variables in this case. This is an advanced topic not covered in the AQA A-level.
+    def merge(left, right):
+        merged = []
+        i_left = 0
+        i_right = 0
 
-        while i_left <= middle and i_right <= end:
-            if temp_list[i_left] < temp_list[i_right]:
-                data_list[i_data_list] = temp_list[i_left]
+        while i_left < len(left) and i_right < len(right):
+            if left[i_left] < right[i_right]:
+                merged.append(left[i_left])
                 i_left += 1
             else:
-                data_list[i_data_list] = temp_list[i_right]
+                merged.append(right[i_right])
                 i_right += 1
-            i_data_list += 1
 
-        # either the left or the right has run out of items, fill in the rest of the items from the other side
-        if i_left <= middle:
-            for i in range(i_left,middle+1):
-                data_list[i_data_list] = temp_list[i]
-                i_data_list += 1
+        # Either the left or the right has run out of items, fill in the rest of the items from the other side
+        if i_left < len(left):
+            for i in range(i_left,len(left)):
+                merged.append(left[i])
         else:
-            for i in range(i_right,end+1):
-                data_list[i_data_list] = temp_list[i]
-                i_data_list += 1
+            for i in range(i_right,len(right)):
+                merged.append(right[i])
+
+        return merged
 
     if end > start:
         middle = (start + end) // 2
-        merge_sort(data_list, start, middle, print_func)
-        merge_sort(data_list, middle+1, end, print_func)
-        merge(start, middle, end, print_func)
-        print_func(data_list, middle)
+        left = merge_sort(l, start, middle, print_func)
+        right = merge_sort(l, middle + 1, end, print_func)
+        result = merge(left, right)
+        print_func(result, middle)
+        return result
+    else:
+        return [start]
 
 # Insertion sort is faster than bubble sort (although still very
 # poor for large arrays) and uses less memory than merge sort.
@@ -156,10 +161,15 @@ def quick_sort_partition(l, start, end, swap_animation = None):
 if __name__ == "__main__":
     my_list = [5,1,2,9,8,1,4,3,5,0,7,3,1]
     #my_list = [5,1,2,9]
+    #my_list = [n for n in range(100)]
+    #random.shuffle(my_list)
 
+    # In-place algorithms
     #bubble_sort(my_list, print)
-    #merge_sort(my_list,0,len(my_list)-1, print)
-    insertion_sort(my_list, print)
+    #insertion_sort(my_list, print)
     #insertion_sort_optimised(my_list, print)
     #quick_sort(my_list,0,len(my_list)-1, print)
+
+    # Non in-place algorithms
+    result = merge_sort(my_list,0,len(my_list)-1, print)
 
