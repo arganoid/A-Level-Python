@@ -1,3 +1,11 @@
+# Sorting algorithms taught in AQA A-level Computer Science:
+# Bubble sort
+# Merge sort
+# Plus insertion sort and quick sort (not part of the AQA A-level syllabus)
+
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
+
 import random
 
 # Bubble sort is simple but very slow compared to other sorting algorithms

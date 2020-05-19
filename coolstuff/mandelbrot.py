@@ -1,11 +1,12 @@
 # This has nothing to do with the A-level syllabus (except perhaps for recursion) but is cool so I included it anyway
 # Requires pygame library
 
-# http://www.pygame.org/docs/ref/gfxdraw.html
-
 # The Mandelbrot set is the set of complex numbers c for which the function f c ( z ) = z^2 + c
 # does not diverge when iterated from z = 0, i.e., for which the sequence f c ( 0 ),  f c ( f c ( 0 ) ), etc.,
 # remains bounded in absolute value.
+
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
 
 import sys
 

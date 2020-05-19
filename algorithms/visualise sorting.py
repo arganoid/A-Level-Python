@@ -1,3 +1,8 @@
+# Visualisation of sorting algorithms
+
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
+
 import random
 import sys
 import time
@@ -56,7 +61,7 @@ def pygame_display_list(list, current_index, positions_override = None):
         screen.blit(textSurface, [int(x - textSurface.get_width() / 2), int(y)])
 
         if i == current_index:
-            pygame.draw.rect(screen, BLUE, pygame.rect.Rect(x - 40, y, 20, textSurface.get_height() * 1))
+            pygame.draw.rect(screen, BLUE, pygame.rect.Rect(x - 40, y, 20, textSurface.get_height()))
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
@@ -104,8 +109,8 @@ def swap_animation(list, swap1, swap2):
 
             screen.blit(textSurface, [int(x - textSurface.get_width() / 2), int(y)])
 
-            #if i == current_index:
-            #    pygame.draw.rect(screen, BLUE, pygame.rect.Rect(x - 40, y, 20, textSurface.get_height() * 2))
+            if i == swap1 or i == swap2:
+                pygame.draw.rect(screen, BLUE, pygame.rect.Rect(x - 40, y, 20, textSurface.get_height()))
 
         # --- Go ahead and update the screen with what we've drawn.
         pygame.display.flip()

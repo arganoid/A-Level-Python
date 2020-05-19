@@ -1,3 +1,7 @@
+# Iterative and recursive implementations of factorial
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
+
 # Calculate factorial (eg 5! = 5 * 4 * 3 * 2 * 1) using a loop
 def factorialIterative(x):
     result = 1
@@ -14,12 +18,13 @@ def factorialIterative(x):
 # 2 * 1!
 # 1! = 1
 
-# The following function qualifies as both recursive and functional
+# The following function qualifies as both recursive (because it calls itself)
+# and functional (as there are no side effects)
 def factorialRecursive(x):
     if x <= 1:
         return x
     else:
-       return x * factorialRecursive(x-1)
+        return x * factorialRecursive(x-1)
 
 print(factorialIterative(5))
 print(factorialRecursive(5))

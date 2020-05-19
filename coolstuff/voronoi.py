@@ -1,11 +1,11 @@
 # This has nothing to do with the A-level syllabus but is cool so I included it anyway
 # Requires pygame library
 
-# http://www.pygame.org/docs/ref/gfxdraw.html
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
 
 import sys
 import random
-import functools
 import profiler
 
 import pygame
@@ -68,9 +68,9 @@ while True:
 
             pygame.gfxdraw.pixel(screen, px, py, nearest_point[1])
 
-            # if px == 0:
+            if px == 0:
+                pygame.display.flip()
             #     print("Line: " + str(line_profiler.get_seconds()))
-            #     pygame.display.flip()
             #     line_profiler = profiler.Profiler()
 
     print("Frame: " + str(frame_profiler.get_seconds()))

@@ -5,7 +5,9 @@
 # This has nothing to do with the A-level syllabus but is cool so I included it anyway
 # Requires pygame library
 
-# http://www.pygame.org/docs/ref/gfxdraw.html
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
+
 
 import sys
 import random

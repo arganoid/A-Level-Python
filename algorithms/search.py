@@ -1,32 +1,37 @@
+# Linear and binary search, as taught in AQA A-level Computer Science
+
+# Need help understanding computer science and programming?
+# Arganoid Tuition - https://tutor.arganoid.com/
+
 import profiler
 import random
 
 # Returns index of item, if not present returns -1
-def linear_search(list, item_searched_for):
-    for i in range(0,len(list)):
-        if list[i] == item_searched_for:
+def linear_search(l, item_searched_for):
+    for i in range(0,len(l)):
+        if l[i] == item_searched_for:
             return i
 
     # Not found
     return -1
 
 # List must be sorted. Returns index of item, if not present returns -1. Second return value is number of steps taken.
-def binary_search(list, item_searched_for):
+def binary_search(l, item_searched_for):
     steps = 0
     start = 0
-    end = len(list) - 1
+    end = len(l) - 1
     mid = (end + start) // 2
-    while list[mid] != item_searched_for and end > start:  # AQA book is wrong! It effectively says end != start - that won't work for lists with odd number of items (TODO CONFIRM)
+    while l[mid] != item_searched_for and end > start:  # AQA book is wrong! It effectively says end != start - that won't work for lists with odd number of items (TODO CONFIRM)
         mid = (end + start) // 2
-        if list[mid] < item_searched_for:
+        if l[mid] < item_searched_for:
             # Item can't be in the first half of the part of the list we're looking at
             start = mid + 1
-        elif list[mid] > item_searched_for:
+        elif l[mid] > item_searched_for:
             # Item can't be in the second half of the part of the list we're looking at
             end = mid - 1
         steps += 1
 
-    if list[mid] == item_searched_for:
+    if l[mid] == item_searched_for:
         return mid, steps
     else:
         return -1, steps
