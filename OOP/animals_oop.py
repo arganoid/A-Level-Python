@@ -1,6 +1,6 @@
 # Dog, Cat and Elephant classes - not using inheritance
 
-class Dog():
+class Dog:
     def __init__(self, name, age, breed):
         self.__name = name          # __ = private
         self.__age = age
@@ -18,7 +18,7 @@ class Dog():
     def set_age(self, value):
         self.__age = value
 
-class Cat():
+class Cat:
     def __init__(self, name, age):
         self.__age = age
         self.__name = name
@@ -29,7 +29,7 @@ class Cat():
     def print_age(self):
         print(self.__age)
 
-class Elephant():
+class Elephant:
     def __init__(self, name, age, trunk_length):
         self.__age = age
         self.__name = name
