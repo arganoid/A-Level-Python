@@ -8,19 +8,20 @@
 # Need help understanding computer science and programming?
 # Arganoid Tuition - https://tutor.arganoid.com/
 
-
 import sys
 import random
 import profiler
-
 import pygame
 import pygame.gfxdraw
 
-NUM_POINTS = 1000
-
+# Settings
+NUM_POINTS = 100            # This version can handle 1000 no problem!
+SCREEN_SIZE = (640, 480)
 SHOW_GRID = True
 SHOW_POINTS = True
-
+SHOW_LINE_BY_LINE = True
+SHOW_LINE_TIMINGS = False
+SHOW_FRAME_TIMINGS = True
 SAVE_IMAGES = False
 
 random.seed(2)
@@ -33,8 +34,7 @@ BLUE     = (   0,   0, 255)
 
 pygame.init()
 
-screen_size = (1280,720)
-screen = pygame.display.set_mode(screen_size)
+screen = pygame.display.set_mode(SCREEN_SIZE)
 
 screen.fill(WHITE)
 
@@ -56,7 +56,7 @@ for y in range(world_top, world_bottom, cell_size):
 
 points = []
 for i in range(0, NUM_POINTS):
-    pos = [ random.randint(0,screen_size[0]), random.randint(0,screen_size[1]) ]
+    pos = [random.randint(0, SCREEN_SIZE[0]), random.randint(0, SCREEN_SIZE[1])]
     col = ( random.randint(0,255), random.randint(0,255), random.randint(0,255) )
     vel = ( random.randrange(-1,1), random.randrange(-1,1) )
 
@@ -75,8 +75,8 @@ line_profiler = profiler.Profiler()
 frame_profiler = profiler.Profiler()
 
 while True:
-    for py in range(0, screen_size[1]):
-        for px in range(0, screen_size[0]):
+    for py in range(0, SCREEN_SIZE[1]):
+        for px in range(0, SCREEN_SIZE[0]):
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
                     sys.exit()
@@ -124,13 +124,19 @@ while True:
             else:
                 pygame.gfxdraw.pixel(screen, px, py, BLACK)
 
-            # if px == 0:
-            #     #print("Line: " + str(line_profiler.get_seconds()))
-            #     pygame.display.flip()
-            #     #line_profiler = profiler.Profiler()
+            if px == 0:
+                if SHOW_LINE_BY_LINE:
+                    pygame.display.flip()
+                if SHOW_LINE_TIMINGS:
+                    print("Line: " + str(line_profiler.get_seconds()))
+                    line_profiler = profiler.Profiler()
 
-    print("Frame: " + str(frame_profiler.get_seconds()))
     pygame.display.flip()
+
+    if SHOW_FRAME_TIMINGS:
+        print("Frame: " + str(frame_profiler.get_seconds()))
+        frame_profiler = profiler.Profiler()
+
 
     if SHOW_GRID:
         for y in range(world_top, world_bottom, cell_size):
@@ -141,8 +147,6 @@ while True:
     if SHOW_POINTS:
         for point in points:
             pygame.draw.circle(screen, RED, point[0], 2)
-
-    frame_profiler = profiler.Profiler()
 
     if SAVE_IMAGES:
         pygame.image.save(screen, f"img{image_idx:04}.png")
