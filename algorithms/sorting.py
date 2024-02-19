@@ -7,13 +7,14 @@
 # Arganoid Tuition - https://tutor.arganoid.com/
 
 import random
+import time
 
 # Bubble sort is simple but very slow compared to other sorting algorithms
 def bubble_sort(l, print_func, swap_animation = None):
     print_func(l, 0)
     steps = 0
-    for i in range(0, len(l) - 1):
-        for j in range(0, len(l) - 1):
+    for i in range(len(l) - 1):
+        for j in range(len(l) - 1):
             steps = steps + 1
             if l[j] > l[j + 1]:
                 if swap_animation != None:
@@ -35,7 +36,7 @@ def bubble_sort_optimised(l, print_func, swap_animation = None):
     anySwapsMade = True
     while anySwapsMade:
         anySwapsMade = False
-        for i in range(0, len(l) - 1):
+        for i in range(len(l) - 1):
             steps = steps + 1
             if l[i] > l[i + 1]:
                 if swap_animation != None:
@@ -53,43 +54,43 @@ def bubble_sort_optimised(l, print_func, swap_animation = None):
 # Merge sort is much faster than bubble sort (except maybe for very short lists) but uses more memory
 # Unlike the other algorithms in this file, this implementation of merge sort does not sort the list
 # 'in-place' - i.e. the original list is not changed, instead it returns a new list
-def merge_sort(l, start, end, print_func):
+def merge_sort(sort_list):
+    if len(sort_list) > 1:
+        middle = len(sort_list) // 2
 
-    # Here we define a function within a function. The merge function can only be called within merge_sort, and
-    # it can access variables from the outer function - this makes it what's known as a 'closure' - although we
-    # don't make use of outer variables in this case. This is an advanced topic not covered in the AQA A-level.
-    def merge(left, right):
-        merged = []
-        i_left = 0
-        i_right = 0
+        # These lines use Python list slicing which lets you generate a new list by writing stuff like list_name[1:4]
+        # to get all elements from indices 1 to 3
+        left_elements = sort_list[:middle]  # gets all elements up to but not including middle
+        right_elements = sort_list[middle:]  # gets all elements from middle onwards
 
-        while i_left < len(left) and i_right < len(right):
-            if left[i_left] < right[i_right]:
-                merged.append(left[i_left])
-                i_left += 1
+        left_sorted = merge_sort(left_elements)
+        right_sorted = merge_sort(right_elements)
+
+        # Merge left and right lists into result list
+        result_list = []
+        pointer_left = 0
+        pointer_right = 0
+        # Keep going until both lists have been exhausted
+        while pointer_left < len(left_sorted) or pointer_right < len(right_sorted):
+            # If left list has been exhausted, take from right
+            if pointer_left >= len(left_sorted):
+                result_list.append(right_sorted[pointer_right])
+                pointer_right += 1
+            # Same but for if right list has been exhausted
+            elif pointer_right >= len(right_sorted):
+                result_list.append(left_sorted[pointer_left])
+                pointer_left += 1
+            # If both lists still have remaining elements, choose whichever element has the lowest value
+            elif left_sorted[pointer_left] < right_sorted[pointer_right]:
+                result_list.append(left_sorted[pointer_left])
+                pointer_left += 1
             else:
-                merged.append(right[i_right])
-                i_right += 1
-
-        # Either the left or the right has run out of items, fill in the rest of the items from the other side
-        if i_left < len(left):
-            for i in range(i_left,len(left)):
-                merged.append(left[i])
-        else:
-            for i in range(i_right,len(right)):
-                merged.append(right[i])
-
-        return merged
-
-    if end > start:
-        middle = (start + end) // 2
-        left = merge_sort(l, start, middle, print_func)
-        right = merge_sort(l, middle + 1, end, print_func)
-        result = merge(left, right)
-        print_func(result, middle)
-        return result
+                result_list.append(right_sorted[pointer_right])
+                pointer_right += 1
+        return result_list
     else:
-        return [start]
+        # List only contains 1 or 0 items, just return the list as it can be considered sorted
+        return sort_list
 
 # Insertion sort is faster than bubble sort (although still very
 # poor for large arrays) and uses less memory than merge sort.
@@ -167,17 +168,32 @@ def quick_sort_partition(l, start, end, swap_animation = None):
 
 
 if __name__ == "__main__":
-    my_list = [5,1,2,9,8,1,4,3,5,0,7,3,1]
+    #my_list = [5,1,2,9,8,1,4,3,5,0,7,3,1]
     #my_list = [5,1,2,9]
-    #my_list = [n for n in range(100)]
-    #random.shuffle(my_list)
+
+    # Create list of number from 0 to 9999 and shuffle them randomly
+    my_list = [n for n in range(10000)]
+    random.shuffle(my_list)
+
+    # Begin timer
+    start_time = time.perf_counter()
+
+    # Change to True to use standard Python print as the print function for the sorting algorithms,
+    # otherwise provide a print function that does nothing
+    if False:
+        print_func = print
+    else:
+        def print_func(*args):
+            pass
 
     # In-place algorithms
-    #bubble_sort(my_list, print)
-    #insertion_sort(my_list, print)
-    #insertion_sort_optimised(my_list, print)
-    #quick_sort(my_list,0,len(my_list)-1, print)
+    #bubble_sort(my_list, print_func)
+    #bubble_sort_optimised(my_list, print_func)
+    #insertion_sort(my_list, print_func)
+    #insertion_sort_optimised(my_list, print_func)
+    #quick_sort(my_list,0,len(my_list)-1, print_func)
 
     # Non in-place algorithms
-    result = merge_sort(my_list,0,len(my_list)-1, print)
+    result = merge_sort(my_list)
 
+    print(f"Finished in {time.perf_counter() - start_time} seconds")
