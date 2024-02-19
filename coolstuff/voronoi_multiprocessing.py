@@ -1,7 +1,10 @@
 # Need help understanding computer science and programming?
 # Arganoid Tuition - https://tutor.arganoid.com/
+
+# This code generates a voronoi diagram by making use of multiple CPU cores at the same time
+
 import sys, random
-from multiprocessing import Process, current_process, Queue
+from multiprocessing import Process, Queue
 from profiler import Profiler
 from queue import Empty
 
@@ -15,10 +18,10 @@ from queue import Empty
 # logger = log_to_stderr(logging.DEBUG)
 
 # Settings
-NUM_POINTS = 100
+NUM_POINTS = 1000
 SCREEN_SIZE = (640, 480)
-LINES_PER_PROCESS = 20
-NUM_FRAMES = 1
+LINES_PER_PROCESS = 80
+NUM_FRAMES = 100
 SHOW_LINE_BY_LINE = True
 SHOW_FRAME_TIMINGS = True
 SAVE_IMAGES = False
@@ -27,8 +30,13 @@ WHITE = (255, 255, 255)
 
 random.seed(2)
 
+# The lines function is called on multiple processes. It receives:
+# points: a set of points for the voronoi diagram
+# py_range: a range object of lines (py = pixel y) that this process should calculate
+# Q: a multiprocessing queue to add the results to
+# w: window width
 def lines(points, py_range, Q, w):
-    print(f"begin {py_range}")
+    #print(f"begin {py_range}")
     # sys.stdout.flush()
     for py in py_range:
         result = []
@@ -46,7 +54,8 @@ def lines(points, py_range, Q, w):
 
     Q.close() # necessary? Called automatically when current process is garbage collected
 
-    print(f"done {py_range}")
+    #print(f"done {py_range}")
+
 
 if __name__ == '__main__':
     import pygame
@@ -72,20 +81,26 @@ if __name__ == '__main__':
     Q = Queue()
 
     for i in range(NUM_FRAMES):
-        processes = []
+        # Spawn processes for calculating the chunks of the voronoi diagram, each process will run the lines function
+        # with the given arguments
         for py in range(0, SCREEN_SIZE[1], LINES_PER_PROCESS):
-            print(f"spawn {py}")
+            ##print(f"spawn {py}")
             p = Process(target=lines, args=(points, range(py, min(py+LINES_PER_PROCESS, SCREEN_SIZE[1])), Q, SCREEN_SIZE[0]))
             p.start()
-            processes.append(p)
 
-        print("started all")
+        #print("started all")
 
-        count = 0
+        lines_drawn = 0
 
         def draw():
-            global count
-            while not Q.empty():    # Return True if the queue is empty, False otherwise. Because of multithreading/multiprocessing semantics, this is not reliable
+            global lines_drawn
+            # From https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue
+            # "empty(): Returns True if the queue is empty, False otherwise. However, because of
+            # multithreading/multiprocessing semantics, this is not reliable"
+            # Another process could be adding to the queue or removing from the queue at the same time that we ask
+            # if the queue is empty. Therefore we can't rely on the answer empty provides. The exception handler below
+            # deals with the case where the queue is reported as not empty but there is no item to be found
+            while not Q.empty():
                 try:
                     item = Q.get()
                     for px in range(0, SCREEN_SIZE[0]):
@@ -98,22 +113,17 @@ if __name__ == '__main__':
                         if event.type == pygame.QUIT:  # If user clicked close
                             sys.exit()
 
-                    print(f"drawn {item[0]}")
+                    #print(f"drawn {item[0]}")
 
-                    count += 1
+                    lines_drawn += 1
                 except Empty:
                     print("Queue empty")
 
-        # No good - if you try to join a process which has added stuff to a multiprocessing queue, and the stuff has not been consumed, it may deadlock
-        # for process in processes:
-        #     print("join!")
-        #     process.join()
-        #     draw()
-
-        while count < SCREEN_SIZE[1]:
+        # Keep going until we've drawn all lines
+        while lines_drawn < SCREEN_SIZE[1]:
             draw()
 
-        print("joined all")
+        #print("joined all")
 
         pygame.display.flip()
 
