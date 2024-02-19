@@ -1,7 +1,7 @@
+# This code generates a voronoi diagram by making use of multiple CPU cores at the same time
+
 # Need help understanding computer science and programming?
 # Arganoid Tuition - https://tutor.arganoid.com/
-
-# This code generates a voronoi diagram by making use of multiple CPU cores at the same time
 
 import sys, random
 from multiprocessing import Process, Queue
