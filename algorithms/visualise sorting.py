@@ -12,6 +12,9 @@ import algorithms.sorting as sorting
 
 pygame.init()
 
+DELAY_BETWEEN_ANIMATIONS = 0.5
+ANIMATION_SPEED = 3
+
 # Define some colors
 BLACK    = (   0,   0,   0)
 WHITE    = ( 255, 255, 255)
@@ -41,9 +44,9 @@ def get_positions(list, textSurfaces):
     for i in range(0, len(list)):
         positions.append((x,y))
         y += textSurfaces[i].get_height() + 5
-        if y > screen_size[1]:
-            y -= screen_size[1]
-            x += 50
+        if y > screen_size[1] - 50:
+            y = 10
+            x += 80
     return positions
 
 def pygame_display_list(list, current_index, positions_override = None):
@@ -70,7 +73,7 @@ def pygame_display_list(list, current_index, positions_override = None):
         if event.type == pygame.QUIT: # If user clicked close
             sys.exit()
 
-    time.sleep(0.5)
+    time.sleep(DELAY_BETWEEN_ANIMATIONS)
 
 def lerp( pos0, pos1, t ):
     x = (pos1[0] - pos0[0]) * t + pos0[0]
@@ -90,7 +93,7 @@ def swap_animation(list, swap1, swap2):
     while swap_progress < 1:
         delta_time = clock.tick(60) / 1000
 
-        swap_progress += delta_time * 1
+        swap_progress += delta_time * ANIMATION_SPEED
 
         screen.fill(WHITE)
 
@@ -122,14 +125,14 @@ def swap_animation(list, swap1, swap2):
 
 if __name__ == "__main__":
     if True:
-        my_list = [5,1,2,9,8,6,4,3,5,0,7,3,1,4]
+        my_list = [5,1,2,9,8,6,4,3,5,0,7,3]
     else:
         my_list = []
         for i in range(0,100):
-            my_list.append(random.randint(0,9))
+            my_list.append(random.randint(0,50))
 
-    #sorting.bubble_sort(my_list, pygame_display_list, swap_animation)
-    sorting.insertion_sort(my_list, pygame_display_list, swap_animation)
+    sorting.bubble_sort(my_list, pygame_display_list, swap_animation)
+    #sorting.insertion_sort(my_list, pygame_display_list, swap_animation)
     #sorting.merge_sort(my_list,0,len(my_list)-1, pygame_display_list)
     #sorting.quick_sort(my_list, 0, len(my_list) - 1, pygame_display_list, swap_animation)
     time.sleep(3)
